@@ -12,6 +12,9 @@ var menuTray = null,
   window = null,
   menuItems = [
     {
+      type: 'separator'
+    },
+    {
       label: 'Quit Application',
       click: function () {
         app.quit()
@@ -80,7 +83,6 @@ function updateMenu() {
       for (i = 0; i < menuItems.length; ++i) {
         dnsDockMenuItems.push(menuItems[i]);
       }
-
 
       menuTray.setContextMenu(menu.buildFromTemplate(dnsDockMenuItems));
     });
