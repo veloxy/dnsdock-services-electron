@@ -75,9 +75,12 @@ function updateMenu() {
         dnsDockMenuItems.push(menuItem);
       }
 
+      dnsDockMenuItems.sort((a, b) => a.label.localeCompare(b.label));
+
       for (i = 0; i < menuItems.length; ++i) {
         dnsDockMenuItems.push(menuItems[i]);
       }
+
 
       menuTray.setContextMenu(menu.buildFromTemplate(dnsDockMenuItems));
     });
