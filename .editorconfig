@@ -1,4 +1,3 @@
-# Matches the exact files either package.json or .travis.yml
 [*{.json,.js,.html}]
 indent_style = space
 indent_size = 2

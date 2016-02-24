@@ -1,7 +1,7 @@
 {
   "name": "dnsdock-services-electron",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple app that displays DNSdock services in OSX tray",
   "main": "src/script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
