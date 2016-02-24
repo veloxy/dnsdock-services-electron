@@ -1,0 +1,14 @@
+{
+  "name": "dnsdock-services-electron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "copy-paste": "^1.1.4"
+  }
+}
