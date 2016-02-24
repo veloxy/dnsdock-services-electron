@@ -1,0 +1,10 @@
+{
+  "title": "DNSDockDock",
+  "icon": "src/assets/icons/icon.icns",
+  "background": "src/assets/img/background.png",
+  "icon-size": 180,
+  "contents": [
+    { "x": 200, "y": 210, "type": "file", "path": "build/DNSDockDock-darwin-x64/DNSDockDock.app" },
+    { "x": 200, "y": 450, "type": "link", "path": "/Applications" }
+  ]
+}
