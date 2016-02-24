@@ -9,6 +9,10 @@ Simple little app that displays dnsdock services in a tray on OSX.
 - Clicking links opens it in your browser of choice
 - Clicking IP's will copy it to clipboard
 
+## Installation
+
+[Download latest release](https://github.com/veloxy/dnsdock-services-electron/releases) and install it like any other OSX application. 😋
+
 ## Building from source
 
 ### Requirements
