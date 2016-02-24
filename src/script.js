@@ -31,6 +31,13 @@ app.on('ready', function () {
 function init() {
   menuTray = new tray(path.join(__dirname, 'assets/img/icon.png'));
   menuTray.setTitle('');
+  menuTray.setContextMenu(menu.buildFromTemplate(menuItems));
+
+  updateMenu();
+  setInterval(updateMenu, 10000);
+}
+
+function updateMenu() {
 
   var dnsDockMenuItems = [];
 
@@ -48,10 +55,7 @@ function init() {
           'label': json[key].Name
         };
 
-        //if (json[key].Aliases.length) {
-          menuItem.submenu = [];
-        //}
-
+        menuItem.submenu = [];
         menuItem.submenu.push({
           label: json[key].Ip,
           click: function (menuItem) {
@@ -71,18 +75,12 @@ function init() {
 
         dnsDockMenuItems.push(menuItem);
       }
-console.log(menuItems)
+
       for (i = 0; i < menuItems.length; ++i) {
-        console.log(menuItem)
         dnsDockMenuItems.push(menuItems[i]);
       }
 
       menuTray.setContextMenu(menu.buildFromTemplate(dnsDockMenuItems));
     });
-  }).on('error', function (e) {
-    console.log("Got an error: ", e);
   });
-
-
-  menuTray.setContextMenu(menu.buildFromTemplate(menuItems));
 }
