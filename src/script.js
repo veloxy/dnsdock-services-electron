@@ -7,7 +7,6 @@ const electron = require('electron'),
   shell = require('electron').shell,
   browserWindow = require('electron').BrowserWindow,
   ncp = require("copy-paste");
-//path = require('path');
 
 var menuTray = null,
   window = null,
@@ -29,7 +28,7 @@ app.on('ready', function () {
 });
 
 function init() {
-  menuTray = new tray(path.join(__dirname, 'assets/img/icon.png'));
+  menuTray = new tray(path.join(__dirname, 'assets/img/trayTemplate.png'));
   menuTray.setTitle('');
   menuTray.setContextMenu(menu.buildFromTemplate(menuItems));
 

@@ -1,4 +1,4 @@
-# dnsdock-services-electron
+# DNSDock Dock
 
 Simple little app that displays dnsdock services in a tray on OSX.
 
