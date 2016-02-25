@@ -86,5 +86,5 @@ function updateMenu() {
 
       menuTray.setContextMenu(menu.buildFromTemplate(dnsDockMenuItems));
     });
-  });
+  }).on('error', function(e) {});
 }
