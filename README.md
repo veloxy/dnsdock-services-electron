@@ -19,3 +19,7 @@ Simple little app that displays dnsdock services in a tray on OSX.
 npm install
 npm run build
 ```
+
+## Credits
+
+- Icon by [Google](https://design.google.com/icons/#ic_dns), downloaded from [Iconfinder](https://www.iconfinder.com/icons/352321/dns_icon)
