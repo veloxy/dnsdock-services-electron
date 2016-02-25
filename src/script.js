@@ -2,9 +2,9 @@ const electron = require('electron'),
   app = electron.app,
   menu = electron.Menu,
   tray = electron.Tray,
-  http = require('http'),
   path = require('path'),
   shell = require('electron').shell,
+  dnsdockServiceUpdater = require('./libs/dnsdock-service-updater.js'),
   browserWindow = require('electron').BrowserWindow,
   ncp = require("copy-paste");
 
@@ -17,7 +17,7 @@ var menuTray = null,
     {
       label: 'Quit Application',
       click: function () {
-        app.quit()
+        app.quit();
       },
     }
   ];
@@ -35,56 +35,47 @@ function init() {
   menuTray.setTitle('');
   menuTray.setContextMenu(menu.buildFromTemplate(menuItems));
 
-  updateMenu();
-  setInterval(updateMenu, 10000);
+  dnsdockServiceUpdater.start();
+
+  dnsdockServiceUpdater.on('services-updated', function(services) {
+    var dnsDockMenuItems = [];
+
+    for (var key in services) {
+      var menuItem = {
+        'label': services[key].Name
+      };
+
+      menuItem.submenu = [];
+      menuItem.submenu.push({
+        label: services[key].Ip,
+        click: copyIp
+      });
+
+      for (var alias in services[key].Aliases) {
+        menuItem.submenu.push({
+          label: services[key].Aliases[alias],
+          click: openUrl
+        });
+      }
+
+      dnsDockMenuItems.push(menuItem);
+    }
+
+    dnsDockMenuItems.sort((a, b) => a.label.localeCompare(b.label));
+
+    for (i = 0; i < menuItems.length; ++i) {
+      dnsDockMenuItems.push(menuItems[i]);
+    }
+
+    menuTray.setContextMenu(menu.buildFromTemplate(dnsDockMenuItems));
+  });
 }
 
-function updateMenu() {
+function copyIp(menuItem) {
+  ncp.copy(menuItem.label);
+}
 
-  var dnsDockMenuItems = [];
-
-  http.get('http://dnsdock.docker/services', function (res) {
-    var body = '';
-
-    res.on('data', function (chunk) {
-      body += chunk;
-    });
-
-    res.on('end', function () {
-      var json = JSON.parse(body);
-      for (var key in json) {
-        var menuItem = {
-          'label': json[key].Name
-        };
-
-        menuItem.submenu = [];
-        menuItem.submenu.push({
-          label: json[key].Ip,
-          click: function (menuItem) {
-            ncp.copy(menuItem.label);
-          }
-        });
-
-        for (var alias in json[key].Aliases) {
-          menuItem.submenu.push({
-            label: json[key].Aliases[alias],
-            click: function (menuItem) {
-              var link = 'http://' + menuItem.label;
-              shell.openExternal(link);
-            }
-          });
-        }
-
-        dnsDockMenuItems.push(menuItem);
-      }
-
-      dnsDockMenuItems.sort((a, b) => a.label.localeCompare(b.label));
-
-      for (i = 0; i < menuItems.length; ++i) {
-        dnsDockMenuItems.push(menuItems[i]);
-      }
-
-      menuTray.setContextMenu(menu.buildFromTemplate(dnsDockMenuItems));
-    });
-  }).on('error', function(e) {});
+function openUrl(menuItem) {
+  var link = 'http://' + menuItem.label;
+  shell.openExternal(link);
 }

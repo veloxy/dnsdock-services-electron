@@ -1,14 +1,22 @@
 {
   "name": "dnsdock-services-electron",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha",
   "description": "Simple app that displays DNSdock services in OSX tray",
   "main": "src/script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jshint src/**.js",
+    "build": "rm -rf build/ && electron-packager ./ DNSDockDock --platform=darwin --arch=all --version=0.36.7 --out=./build --ignore build --overwrite --icon=src/assets/icons/icon.icns --prune && appdmg appdmg.json build/DNSDockDock-darwin-x64.dmg"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "copy-paste": "^1.1.4"
+    "copy-paste": "^1.1.4",
+    "request": "^2.69.0"
+  },
+  "devDependencies": {
+    "appdmg": "^0.3.6",
+    "electron-packager": "^5.2.1",
+    "jshint": "^2.9.1"
   }
 }
