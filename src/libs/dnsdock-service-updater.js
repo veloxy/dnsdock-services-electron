@@ -16,15 +16,16 @@ function DNSDockServiceUpdater() {
   }
 
   object.update = function() {
-    request(url, function (error, response, body) {
-      if (response.statusCode !== 200 || error) {
-        object.emit('error', error);
-        return;
+    request(url, function (error, response) {
+      var responseData = 'null';
+
+      if (object.isValidResponse(response) && !error) {
+        responseData = response.body;
       }
 
-      if (body !== services) {
-        object.emit('services-updated', JSON.parse(body));
-        services = body;
+      if (responseData !== services) {
+        services = responseData;
+        object.emit('services-updated', JSON.parse(responseData));
       }
     });
   }
@@ -32,6 +33,16 @@ function DNSDockServiceUpdater() {
   object.stop = function() {
     clearInterval(interval);
     object.emit('stop');
+  }
+
+  object.isValidResponse = function(response) {
+    if (response && (response.hasOwnProperty('statusCode') && response.statusCode === 200)
+      && response.hasOwnProperty('body')
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   return object;
